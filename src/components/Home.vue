@@ -1,11 +1,18 @@
 <template>
   <div class="home">
-    <h2>Essential Links</h2>
+    <SelectFilter />
+    <MatchView />
   </div>
 </template>
 
 <script>
+import { SelectFilter, MatchView } from './index'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  components: {
+    SelectFilter,
+    MatchView
+  }
 }
 </script>
