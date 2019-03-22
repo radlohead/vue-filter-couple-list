@@ -1,12 +1,12 @@
 <template>
   <div>
     <select
-      name="getHobbysListSelectFilter"
-      @change="getHobbysListSelectFilter"
+      name="hobbysListFilter"
+      @change="handleChangeHobbysListFilter"
     >
       <option disabled selected="selected">filter</option>
       <option
-        v-for="item in getHobbysListSelectFilterAlphabet"
+        v-for="item in getAlphabetList"
         :key="item.text"
       >{{ item.text }}</option>
     </select>
@@ -22,13 +22,13 @@ export default {
     this.$store.dispatch('getHobbysList')
   },
   methods: {
-    getHobbysListSelectFilter (e) {
-      this.$store.commit('getHobbysListSelectFilter', e.target)
+    handleChangeHobbysListFilter (e) {
+      this.$store.commit('handleChangeHobbysListFilter', e.target)
     }
   },
   computed: {
     ...mapGetters([
-      'getHobbysListSelectFilterAlphabet'
+      'getAlphabetList'
     ])
   }
 }

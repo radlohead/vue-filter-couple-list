@@ -6,10 +6,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    hobbysList: []
+    hobbysList: [],
+    matchHobbysList: []
   },
   getters: {
-    getHobbysListSelectFilterAlphabet () {
+    getAlphabetList () {
       // console.log(JSON.parse(JSON.stringify(store.state.hobbysList)))
       let result = []
       for (let i = 65; i <= 90; i++) result.push({ text: String.fromCharCode(i) })
@@ -26,10 +27,14 @@ const store = new Vuex.Store({
   },
   mutations: {
     getHobbysList (state) {
-      console.log(JSON.parse(JSON.stringify(state.hobbysList[0])))
+      state.hobbysList = state.hobbysList
+        .flat()
+        .map(v => v.split('').sort())
+        .map(v => v.join(''))
+      console.log(JSON.parse(JSON.stringify(state.hobbysList)))
     },
-    getHobbysListSelectFilter (state, items) {
-      console.log('getHobbysListSelectFilter', items.value)
+    handleChangeHobbysListFilter (state, items) {
+      console.log('handleChangeHobbysListFilter', items.value)
     }
   }
 })
