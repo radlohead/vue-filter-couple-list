@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -9,20 +10,15 @@ const store = new Vuex.Store({
   },
   actions: {
     async getHobbysList ({ commit }) {
-      let response = null
-      try {
-        response = await fetch('https://recurit.hwahae.co.kr/3')
-      } catch (err) {
-        console.log(err)
-        return
-      }
-      console.log(response.body)
-      commit('getHobbysList', response.body)
+      const response = await axios.get('http://localhost:4000/hwahae/3')
+      console.log(response.data)
+      this.state.hobbysList.push(response.data)
+      commit('getHobbysList')
     }
   },
   mutations: {
     getHobbysList (state) {
-      console.log(state)
+      console.log(JSON.parse(JSON.stringify(state.hobbysList[0])))
     }
   }
 })
