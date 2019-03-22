@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button v-on:click="getHobbysList">SelectFilter</button>
     <select
       name="getHobbysListSelectFilter"
       @change="getHobbysListSelectFilter"
@@ -15,19 +14,19 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'SelectFilter',
+  created () {
+    this.$store.dispatch('getHobbysList')
+  },
   methods: {
     getHobbysListSelectFilter (e) {
       this.$store.commit('getHobbysListSelectFilter', e.target)
     }
   },
   computed: {
-    ...mapActions([
-      'getHobbysList'
-    ]),
     ...mapGetters([
       'getHobbysListSelectFilterAlphabet'
     ])
