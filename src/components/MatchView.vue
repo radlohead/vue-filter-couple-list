@@ -9,10 +9,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>2</td>
-          <td>3</td>
+        <tr v-for="item in getHobbysMatchList()" :key="item.matched">
+          <td>{{ item.matched }}</td>
+          <td>{{ item.left }}</td>
+          <td>{{ item.right }}</td>
         </tr>
       </tbody>
     </table>
@@ -24,7 +24,14 @@
 </style>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'MatchView'
+  name: 'MatchView',
+  methods: {
+    ...mapGetters([
+      'getHobbysMatchList'
+    ])
+  }
 }
 </script>

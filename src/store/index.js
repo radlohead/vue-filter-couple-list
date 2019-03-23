@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import mutations from './mutations'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
     hobbysList: [],
-    matchHobbysList: []
+    hobbysMatchList: []
   },
   getters: {
     getAlphabetList () {
@@ -15,6 +16,21 @@ const store = new Vuex.Store({
       let result = []
       for (let i = 65; i <= 90; i++) result.push({ text: String.fromCharCode(i) })
       return result
+    },
+    getHobbysMatchList () {
+      // return store.state.hobbysList
+      return [
+        {
+          matched: '1-3',
+          left: 'aadffaf',
+          right: 'bvbgffg'
+        },
+        {
+          matched: '2-3',
+          left: 'aadffaf',
+          right: 'bvbgffg'
+        }
+      ]
     }
   },
   actions: {
@@ -25,18 +41,7 @@ const store = new Vuex.Store({
       commit('getHobbysList')
     }
   },
-  mutations: {
-    getHobbysList (state) {
-      state.hobbysList = state.hobbysList
-        .flat()
-        .map(v => v.split('').sort())
-        .map(v => v.join(''))
-      console.log(JSON.parse(JSON.stringify(state.hobbysList)))
-    },
-    handleChangeHobbysListFilter (state, items) {
-      console.log('handleChangeHobbysListFilter', items.value)
-    }
-  }
+  mutations
 })
 
 export default store
