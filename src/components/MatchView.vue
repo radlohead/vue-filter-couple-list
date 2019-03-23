@@ -22,6 +22,7 @@
 
 <style lang="sass">
   @import '../css/components/MatchView.scss';
+  @import '../css/components/SelectFilter.scss';
 </style>
 
 <script>

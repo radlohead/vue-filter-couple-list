@@ -1,0 +1,11 @@
+.hobbysFilter {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 90%;
+  max-width: 800px;
+  margin-bottom: 10px;
+
+  select {
+    flex-basis: 80px;
+  }
+}

@@ -4,18 +4,6 @@
   align-items: center;
 }
 
-.hobbysFilter {
-  display: flex;
-  flex-direction: row-reverse;
-  width: 90%;
-  max-width: 800px;
-  margin-bottom: 10px;
-
-  select {
-    flex-basis: 80px;
-  }
-}
-
 .match-view__list {
   width: 90%;
   max-width: 800px;
