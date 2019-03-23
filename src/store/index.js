@@ -29,6 +29,16 @@ const store = new Vuex.Store({
           matched: '2-3',
           left: 'aadffaf',
           right: 'bvbgffg'
+        },
+        {
+          matched: '3-3',
+          left: 'aadffaf',
+          right: 'bvbgffg'
+        },
+        {
+          matched: '4-3',
+          left: 'aadffaf',
+          right: 'bvbgffg'
         }
       ]
     }

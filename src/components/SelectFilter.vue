@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hobbysFilter">
     <select
       name="hobbysListFilter"
       @change="handleChangeHobbysListFilter"

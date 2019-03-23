@@ -1,9 +1,10 @@
 <template>
-  <section>
-    <table class="match-list">
+  <section class="match-view">
+    <SelectFilter />
+    <table class="match-view__list">
       <thead>
         <tr>
-          <th>matched</th>
+          <th class="matched">matched</th>
           <th>left</th>
           <th>right</th>
         </tr>
@@ -25,9 +26,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import SelectFilter from './SelectFilter'
 
 export default {
   name: 'MatchView',
+  components: {
+    SelectFilter
+  },
   methods: {
     ...mapGetters([
       'getHobbysMatchList'
