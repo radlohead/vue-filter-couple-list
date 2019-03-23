@@ -27,8 +27,9 @@ const stringListSort = (state) => {
 const getHobbysMatchList = (state) => {
   // 2.10개의 취미가 일치한 데이터와 남은 데이터를 비교해서 같은 데이터가 있다면 id, hobbys키 값을 가진 객체로 1번 배열에 저장
   hobbysAllMatchList(state)
+  // 3.9개 취미부터 일치하는 취미가 나올때까지 1번대로 진행
+  hobbysRestMatchList(state)
   console.log(JSON.parse(JSON.stringify(state)))
-  // 3.9개 취미부터 1개의 취미까지 1번대로 진행
   // 4.취미의 갯수가 일치하는 순서대로 저장된 배열을 matched, left, right키 값을 가진 객체로 state에 저장
   // 5.10개의 취미를 가진 배열은 커플인 데이터마다 배열로 값을 저장한다.
   // [
@@ -69,22 +70,22 @@ const hobbysAllMatchList = (state) => {
   // 1.10개의 취미가 일치하는 문자열 id, hobbys키 값을 가진 객체로 배열내부에 저장 후 hobbysList에는 해당데이터 제거
   const hobbysList = store.state.hobbysList
   const hobbysMatchList = store.state.hobbysMatchList
-  let count = Array.slice(store.state.hobbysList).length
+  let index = Array.slice(store.state.hobbysList).length
   let temp = []
 
-  while (--count > 0) {
-    if (hobbysList[count].hobbys === hobbysList[count - 1].hobbys) {
+  while (--index > 0) {
+    if (hobbysList[index].hobbys === hobbysList[index - 1].hobbys) {
       temp.push([
         {
-          id: hobbysList[count - 1].id,
-          hobbys: hobbysList[count - 1].hobbys
+          id: hobbysList[index - 1].id,
+          hobbys: hobbysList[index - 1].hobbys
         },
         {
-          id: hobbysList[count].id,
-          hobbys: hobbysList[count].hobbys
+          id: hobbysList[index].id,
+          hobbys: hobbysList[index].hobbys
         }
       ])
-      hobbysList.splice(count - 1, 2)
+      hobbysList.splice(index - 1, 2)
     }
   }
   temp.forEach(v => {
@@ -96,5 +97,44 @@ const hobbysAllMatchList = (state) => {
     })
   })
   hobbysMatchList[0] = temp
-  console.log(temp, JSON.parse(JSON.stringify(hobbysMatchList)), JSON.parse(JSON.stringify(hobbysList)))
+  console.log(JSON.parse(JSON.stringify(state)))
+}
+
+const hobbysRestMatchList = (state) => {
+  let hobbysImmutableLength = state.hobbysList[0].hobbys.length
+  let hobbysMutableLength = Number(hobbysImmutableLength) - 1
+
+  while (hobbysMutableLength > 0) {
+    hobbysMatchList(state)
+    if (state.hobbysMatchList[1].length) break
+    --hobbysMutableLength
+  }
+}
+
+const hobbysMatchList = (state) => {
+  let hobbysImmutableLength = state.hobbysList[0].hobbys.length
+  let hobbysMutableLength = Number(hobbysImmutableLength) - 1
+  let index = state.hobbysList.slice().length
+
+  while (--index > 1) {
+    for (let i = index - 1; i >= 0; --i) {
+      if (!state.hobbysList[i].hobbys.match(new RegExp(`[${state.hobbysList[index].hobbys}]`, 'g'))) continue
+      if (state.hobbysList[i].hobbys.match(new RegExp(`[${state.hobbysList[index].hobbys}]`, 'g')).length === hobbysMutableLength) {
+        state.hobbysMatchList[Math.abs(hobbysMutableLength - hobbysImmutableLength)].push([
+          {
+            id: state.hobbysList[i].id,
+            hobbys: state.hobbysList[i].hobbys
+          },
+          {
+            id: state.hobbysList[index].id,
+            hobbys: state.hobbysList[index].hobbys
+          }
+        ])
+        state.hobbysList.splice(index, 1)
+        state.hobbysList.splice(i, 1)
+        --index
+        break
+      }
+    }
+  }
 }

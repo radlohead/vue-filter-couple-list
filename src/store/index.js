@@ -8,7 +8,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     hobbysList: [],
-    hobbysMatchList: Array.from(Array(10), () => Array(0))
+    hobbysMatchList: Array.from(Array(2), () => Array(0))
   },
   getters: {
     getAlphabetList () {
@@ -20,7 +20,7 @@ const store = new Vuex.Store({
   },
   actions: {
     async getHobbysList ({ commit }) {
-      const response = await axios.get('http://localhost:4000/hwahae/10')
+      const response = await axios.get('http://localhost:4000/hwahae/100')
 
       this.state.hobbysList.push(response.data)
       commit('getHobbysList')
