@@ -19,8 +19,23 @@ const store = new Vuex.Store({
     },
     getHobbysMatchList () {
       // 1.10개의 취미가 일치하는 문자열 id, hobbys키 값을 가진 객체로 배열내부에 저장
-      // let temp = []
-      console.log(JSON.parse(JSON.stringify(store.state.hobbysList)))
+      let temp = []
+      store.state.hobbysList.forEach((v, i, arr) => {
+        if (v === arr[i + 1]) {
+          temp.push([
+            {
+              id: i,
+              hobbys: v
+            },
+            {
+              id: i + 1,
+              hobbys: arr[i + 1]
+            }
+          ])
+        }
+      })
+      console.log(temp)
+      // console.log(JSON.parse(JSON.stringify(store.state.hobbysList)))
       // 2.10개의 취미가 일치한 데이터와 남은 데이터를 비교해서 같은 데이터가 있다면 id, hobbys키 값을 가진 객체로 1번 배열에 저장
       // 3.9개 취미부터 1개의 취미까지 1번대로 진행
       // 4.취미의 갯수가 일치하는 순서대로 저장된 배열을 matched, left, right키 값을 가진 객체로 state에 저장
@@ -61,7 +76,7 @@ const store = new Vuex.Store({
   },
   actions: {
     async getHobbysList ({ commit }) {
-      const response = await axios.get('http://localhost:4000/hwahae/100')
+      const response = await axios.get('http://localhost:4000/hwahae/10000')
       // console.log(response.data)
       this.state.hobbysList.push(response.data)
       commit('getHobbysList')
