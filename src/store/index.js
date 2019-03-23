@@ -18,23 +18,29 @@ const store = new Vuex.Store({
       return result
     },
     getHobbysMatchList () {
-      // 1.10개의 취미가 일치하는 문자열 id, hobbys키 값을 가진 객체로 배열내부에 저장
+      // 1.10개의 취미가 일치하는 문자열 id, hobbys키 값을 가진 객체로 배열내부에 저장 후 hobbysList에는 해당데이터 제거
       let temp = []
+      let deleteIndex = []
       store.state.hobbysList.forEach((v, i, arr) => {
         if (v === arr[i + 1]) {
+          deleteIndex.push(i)
           temp.push([
             {
-              id: i,
+              id: i + 1,
               hobbys: v
             },
             {
-              id: i + 1,
+              id: i + 2,
               hobbys: arr[i + 1]
             }
           ])
         }
       })
-      console.log(temp)
+      deleteIndex = deleteIndex.sort((a, b) => b - a)
+      deleteIndex.forEach(v => {
+        store.state.hobbysList.splice(v - 1, 2)
+      })
+      console.log(deleteIndex, temp, store.state.hobbysList.length)
       // console.log(JSON.parse(JSON.stringify(store.state.hobbysList)))
       // 2.10개의 취미가 일치한 데이터와 남은 데이터를 비교해서 같은 데이터가 있다면 id, hobbys키 값을 가진 객체로 1번 배열에 저장
       // 3.9개 취미부터 1개의 취미까지 1번대로 진행
