@@ -10,11 +10,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in getHobbysMatchList()" :key="item.matched">
+        <!-- <tr v-for="item in getHobbysMatchList()" :key="item.matched">
           <td>{{ item.matched }}</td>
           <td>{{ item.left }}</td>
           <td>{{ item.right }}</td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
   </section>
@@ -26,7 +26,7 @@
 </style>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 import SelectFilter from './SelectFilter'
 
 export default {
@@ -35,7 +35,7 @@ export default {
     SelectFilter
   },
   methods: {
-    ...mapGetters([
+    ...mapMutations([
       'getHobbysMatchList'
     ])
   }

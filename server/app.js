@@ -22,6 +22,14 @@ app.get('/hwahae/3', (req, res, next) => {
     });
 });
 
+app.get('/hwahae/10', (req, res, next) => {
+    connection.query('SELECT hobbys FROM hobbys_list_10', (err, rows) => {
+        if(err) console.log('Error', err);
+        const result = rows.map(v => v.hobbys);
+        res.send(result);
+    });
+});
+
 app.get('/hwahae/100', (req, res, next) => {
     connection.query('SELECT hobbys FROM hobbys_list_100', (err, rows) => {
         if(err) console.log('Error', err);
