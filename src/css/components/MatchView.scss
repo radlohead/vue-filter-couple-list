@@ -1,3 +1,5 @@
+@import './common.scss';
+
 .match-view {
   display: flex;
   flex-direction: column;
@@ -8,15 +10,15 @@
   width: 90%;
   max-width: 800px;
   min-width: 250px;
-  border: 1px solid #000;
+  border: 1px solid $ColorBlackBase;
   border-collapse: collapse;
 
   th, td {
-    border: 1px solid #000;
+    border: 1px solid $ColorBlackBase;
   }
 
   thead th {
-    background-color: #bdbdbd;
+    background-color: $ColorBlack40;
 
     &.matched {
       width: 20%;
@@ -26,7 +28,7 @@
   tbody tr {
     &:nth-child(odd) {
       td {
-        background-color: #eee;
+        background-color: $ColorBlack50;
       }
     }
   }
