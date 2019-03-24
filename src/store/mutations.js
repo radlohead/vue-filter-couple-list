@@ -17,7 +17,9 @@ export default {
         return v.left.includes(items.value) && v.right.includes(items.value)
       })
     }
-    console.log('handleChangeHobbysListFilter', JSON.parse(JSON.stringify(state.hobbysResultList)), items.value)
+    if (items.value === 'filter') {
+      state.hobbysResultList = state.hobbysMatchList
+    }
   }
 }
 
@@ -37,7 +39,6 @@ const getHobbysMatchList = (state) => {
   hobbysRestMatchSetList(state)
   state.hobbysMatchList = state.hobbysMatchList[0] || state.hobbysMatchList[1]
   state.hobbysResultList = state.hobbysMatchList
-  console.log(JSON.parse(JSON.stringify(state.hobbysResultList)))
 }
 
 const hobbysAllMatchSetList = (state) => {
@@ -94,7 +95,6 @@ const hobbysAllMatchList = (state) => {
     })
   })
   hobbysMatchList[0] = temp
-  console.log(JSON.parse(JSON.stringify(hobbysMatchList)))
 }
 
 const hobbysRestMatchSetList = (state) => {

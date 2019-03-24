@@ -4,7 +4,7 @@
       name="hobbysListFilter"
       @change="handleChangeHobbysListFilter"
     >
-      <option disabled selected="selected">filter</option>
+      <option selected="selected">filter</option>
       <option
         v-for="item in getAlphabetList"
         :key="item.text"
