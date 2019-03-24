@@ -25,8 +25,8 @@ export default {
 const stringListSort = (state) => {
   return state.hobbysList
     .flat()
-    .map(v => v.split('').sort())
-    .map(v => v.join('')).sort()
+    .map(hobbys => hobbys.split('').sort())
+    .map(hobbysList => hobbysList.join('')).sort()
 }
 
 const getHobbysMatchList = (state) => {
@@ -51,7 +51,7 @@ const hobbysAllMatchSetList = (state) => {
 
   for (const hobbys of Array.from(hobbysMatchList[0])) {
     if (hobbys.length > 2) {
-      hobbys.forEach((v, i, arr) => {
+      hobbys.forEach((v, i) => {
         temp.push({
           matched: `${hobbys[i !== 2 ? 0 : 1].id}-${hobbys[!i ? 1 : 2].id}`,
           left: hobbys[i !== 2 ? 0 : 1].hobbys,
@@ -71,7 +71,6 @@ const hobbysAllMatchSetList = (state) => {
 
 const hobbysAllMatchList = (state) => {
   const hobbysList = store.state.hobbysList
-  const hobbysMatchList = store.state.hobbysMatchList
   let index = Array.slice(store.state.hobbysList).length
   let temp = []
 
@@ -90,15 +89,15 @@ const hobbysAllMatchList = (state) => {
       hobbysList.splice(index - 1, 2)
     }
   }
-  temp.forEach(v => {
-    hobbysList.forEach((obj, i) => {
-      if (v[0].hobbys === obj.hobbys) {
-        v.push(JSON.parse(JSON.stringify(obj)))
+  temp.forEach(tempObj => {
+    hobbysList.forEach((hobbysListObj, i) => {
+      if (tempObj[0].hobbys === hobbysListObj.hobbys) {
+        tempObj.push(JSON.parse(JSON.stringify(hobbysListObj)))
         hobbysList.splice(i, 1)
       }
     })
   })
-  hobbysMatchList[0] = temp
+  store.state.hobbysMatchList[0] = temp
 
   hobbysAllMatchIdSortList(state)
 }
@@ -129,7 +128,6 @@ const hobbysRestMatchList = (state) => {
     if (state.hobbysMatchList[1].length) break
     --hobbysMutableLength
   }
-
   hobbysMatchIdSortList(state)
 }
 
