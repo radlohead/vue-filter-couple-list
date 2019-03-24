@@ -29,8 +29,29 @@ const getHobbysMatchList = (state) => {
   hobbysAllMatchList(state)
   // 3.9개 취미부터 일치하는 취미가 나올때까지 1번대로 진행
   hobbysRestMatchList(state)
-  console.log(JSON.parse(JSON.stringify(state)))
   // 4.취미의 갯수가 일치하는 순서대로 저장된 배열을 matched, left, right키 값을 가진 객체로 state에 저장
+  let hobbysMatchList = state.hobbysMatchList.map(s => s.map(v => v.sort((a, b) => a.id - b.id)))
+  let temp = []
+
+  for (const hobbys of Array.from(hobbysMatchList).flat(1)) {
+    if (hobbys.length > 2) {
+      hobbys.forEach((v, i, arr) => {
+        temp.push({
+          matched: `${hobbys[i !== 2 ? 0 : 1].id}-${hobbys[!i ? 1 : 2].id}`,
+          left: hobbys[i !== 2 ? 0 : 1].hobbys,
+          right: hobbys[!i ? 1 : 2].hobbys
+        })
+      })
+      continue
+    }
+    temp.push({
+      matched: `${hobbys[0].id}-${hobbys[1].id}`,
+      left: hobbys[0].hobbys,
+      right: hobbys[1].hobbys
+    })
+  }
+  hobbysMatchList = temp
+  console.log(JSON.parse(JSON.stringify(hobbysMatchList)))
   // 5.10개의 취미를 가진 배열은 커플인 데이터마다 배열로 값을 저장한다.
   // [
   //   [{id: ?, hobbys: ?},{id: ?, hobbys: ?}],
@@ -75,7 +96,7 @@ const hobbysAllMatchList = (state) => {
 
   while (--index > 0) {
     if (hobbysList[index].hobbys === hobbysList[index - 1].hobbys) {
-      temp.push([
+      temp.unshift([
         {
           id: hobbysList[index - 1].id,
           hobbys: hobbysList[index - 1].hobbys
@@ -86,6 +107,7 @@ const hobbysAllMatchList = (state) => {
         }
       ])
       hobbysList.splice(index - 1, 2)
+      // console.log(temp, index)
     }
   }
   temp.forEach(v => {
@@ -97,7 +119,7 @@ const hobbysAllMatchList = (state) => {
     })
   })
   hobbysMatchList[0] = temp
-  console.log(JSON.parse(JSON.stringify(state)))
+  console.log(JSON.parse(JSON.stringify(hobbysMatchList)))
 }
 
 const hobbysRestMatchList = (state) => {
