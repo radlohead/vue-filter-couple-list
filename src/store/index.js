@@ -8,14 +8,18 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     hobbysList: [],
-    hobbysMatchList: Array.from(Array(2), () => Array(0))
+    hobbysMatchList: Array.from(Array(2), () => Array(0)),
+    hobbysResultList: []
   },
   getters: {
     getAlphabetList () {
-      // console.log(JSON.parse(JSON.stringify(store.state.hobbysList)))
       let result = []
       for (let i = 65; i <= 90; i++) result.push({ text: String.fromCharCode(i) })
       return result
+    },
+    getHobbysMatchList (state, items) {
+      console.log('getHobbysMatchList', state.hobbysMatchList, items)
+      return state.hobbysMatchList
     }
   },
   actions: {
