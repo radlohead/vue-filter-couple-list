@@ -13,9 +13,11 @@ export default {
   },
   handleChangeHobbysListFilter (state, items) {
     if (items.value) {
-      state.hobbysResultList = state.hobbysMatchList[1]
+      state.hobbysResultList = state.hobbysMatchList.filter(v => {
+        return v.left.includes(items.value) && v.right.includes(items.value)
+      })
     }
-    console.log('handleChangeHobbysListFilter', JSON.parse(JSON.stringify(state.hobbysMatchList)), items.value)
+    console.log('handleChangeHobbysListFilter', JSON.parse(JSON.stringify(state.hobbysResultList)), items.value)
   }
 }
 
@@ -28,16 +30,18 @@ const stringListSort = (state) => {
 
 const getHobbysMatchList = (state) => {
   hobbysAllMatchList(state)
+  state.hobbysMatchList = state.hobbysMatchList.map(s => s.map(v => v.sort((a, b) => a.id - b.id)))
   hobbysAllMatchSetList(state)
 
   hobbysRestMatchList(state)
   hobbysRestMatchSetList(state)
+  state.hobbysMatchList = state.hobbysMatchList[0] || state.hobbysMatchList[1]
   state.hobbysResultList = state.hobbysMatchList
-  console.log(JSON.parse(JSON.stringify(state.hobbysMatchList)))
+  console.log(JSON.parse(JSON.stringify(state.hobbysResultList)))
 }
 
 const hobbysAllMatchSetList = (state) => {
-  let hobbysMatchList = state.hobbysMatchList.map(s => s.map(v => v.sort((a, b) => a.id - b.id)))
+  let hobbysMatchList = state.hobbysMatchList
   let temp = []
 
   for (const hobbys of Array.from(hobbysMatchList[0])) {
