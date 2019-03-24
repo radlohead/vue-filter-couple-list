@@ -87,6 +87,7 @@ const hobbysAllMatchList = (state) => {
         }
       ])
       hobbysList.splice(index - 1, 2)
+      --index
     }
   }
   temp.forEach(tempObj => {
@@ -98,7 +99,6 @@ const hobbysAllMatchList = (state) => {
     })
   })
   store.state.hobbysMatchList[0] = temp
-
   hobbysAllMatchIdSortList(state)
 }
 
@@ -121,6 +121,7 @@ const hobbysRestMatchSetList = (state) => {
 }
 
 const hobbysRestMatchList = (state) => {
+  if (!state.hobbysList[0]) return
   let hobbysMutableLength = Number(state.hobbysList[0].hobbys.slice().length) - 1
 
   while (hobbysMutableLength > 0) {
@@ -132,7 +133,7 @@ const hobbysRestMatchList = (state) => {
 }
 
 const hobbysMatchIdSortList = (state) => {
-  state.hobbysMatchList = state.hobbysMatchList.map(v => v.sort((a, b) => a[0].id - b[0].id))
+  state.hobbysMatchList[1] = state.hobbysMatchList[1].sort((a, b) => a[0].id - b[0].id)
 }
 
 const hobbysMatchList = (state, hobbysMutableLength) => {
