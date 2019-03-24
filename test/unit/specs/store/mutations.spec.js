@@ -16,28 +16,36 @@ describe('mutations getHobbysList', () => {
     mutations.getHobbysList(mockState);
 
     it('state.hobbysList', () => {
-        expect(mockState.hobbysList[0]).toEqual({ id: 1, hobbys: 'ABCDNOPRSV' });
+        const mockData = [
+            { id: 1, hobbys: 'ABCDNOPRSV' },
+            { id: 2, hobbys: 'ABCEHOQRVY' },
+            { id: 3, hobbys: 'ABCIKMOTUY' }
+        ];
+
+        for (const i of mockData.keys()) {
+            expect(mockState.hobbysList[i]).toEqual(mockData[i]);
+        }
     });
 
-    it('state.hobbysMatchList matched', () => {
-        expect(mockState.hobbysMatchList[0].matched).toBe('10-32');
-    });
+    it('state.hobbysMatchList matched, left, right', () => {
+        const mockData = [
+            { matched: '10-32', left: 'ABEHIMNQVY', right: 'ADEIMNOQVY' },
+            { matched: '15-18', left: 'ABIJKLSWXZ', right: 'ABKLNQSWXZ' },
+            { matched: '37-39', left: 'AEFJKNPTUW', right: 'AEIJKMNTUW' },
+            { matched: '75-76', left: 'CFGIKLOPST', right: 'CFGKLNOSTX' }
+        ];
 
-    it('state.hobbysMatchList left, right', () => {
-        expect(mockState.hobbysMatchList[0].left).toBe('ABEHIMNQVY');
-        expect(mockState.hobbysMatchList[0].right).toBe('ADEIMNOQVY');
+        for (const i of mockData.keys()) {
+            expect(mockState.hobbysMatchList[i]).toEqual(mockData[i]);
+        }
     });
 });
 
 describe('mutations handleChangeHobbysListFilter', () => {
+    const mockData = { "matched": "15-18", "left": "ABIJKLSWXZ", "right": "ABKLNQSWXZ" };
     mutations.handleChangeHobbysListFilter(mockState, items);
-    
-    it('state.hobbysResultList matched', () => {
-        expect(mockState.hobbysResultList[0].matched).toBe('15-18');
-    });
 
-    it('state.hobbysResultList left, right', () => {
-        expect(mockState.hobbysResultList[0].left).toBe('ABIJKLSWXZ');
-        expect(mockState.hobbysResultList[0].right).toBe('ABKLNQSWXZ');
+    it('state.hobbysResultList matched, left, right', () => {
+        expect(mockState.hobbysResultList[0]).toEqual(mockData);
     });
 });

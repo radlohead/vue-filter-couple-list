@@ -43,7 +43,6 @@ const hobbysMatchListAll = (state) => {
 
   hobbysRestMatchList(state)
   hobbysRestMatchSetList(state)
-  console.log(JSON.parse(JSON.stringify(state)))
 }
 
 const hobbysAllMatchSetList = (state) => {
