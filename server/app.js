@@ -1,8 +1,13 @@
 const mysql = require('mysql2');
 const express = require('express');
 const app = express();
-const userInfo = require('./userInfo')
-const connection = mysql.createConnection(userInfo);
+const connection = mysql.createConnection({
+    host     : process.env.RDS_HOSTNAME,
+	user     : process.env.RDS_USERNAME,
+	password : process.env.RDS_PASSWORD,
+	port     : process.env.RDS_PORT,
+	database : process.env.RDS_DB_NAME
+});
 
 app.set('port', process.env.PORT || 4000);
 
@@ -14,40 +19,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/hwahae/3', (req, res, next) => {
-    connection.query('SELECT hobbys FROM hobbys_list_3', (err, rows) => {
-        if(err) console.log('Error', err);
-        const result = rows.map(v => v.hobbys);
-        res.send(result);
-    });
-});
-
-app.get('/hwahae/10', (req, res, next) => {
-    connection.query('SELECT hobbys FROM hobbys_list_10', (err, rows) => {
-        if(err) console.log('Error', err);
-        const result = rows.map(v => v.hobbys);
-        res.send(result);
-    });
-});
-
 app.get('/hwahae/100', (req, res, next) => {
     connection.query('SELECT hobbys FROM hobbys_list_100', (err, rows) => {
-        if(err) console.log('Error', err);
-        const result = rows.map(v => v.hobbys);
-        res.send(result);
-    });
-});
-
-app.get('/hwahae/500', (req, res, next) => {
-    connection.query('SELECT hobbys FROM hobbys_list_500', (err, rows) => {
-        if(err) console.log('Error', err);
-        const result = rows.map(v => v.hobbys);
-        res.send(result);
-    });
-});
-
-app.get('/hwahae/10000', (req, res, next) => {
-    connection.query('SELECT hobbys FROM hobbys_list_10000', (err, rows) => {
         if(err) console.log('Error', err);
         const result = rows.map(v => v.hobbys);
         res.send(result);
