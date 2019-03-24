@@ -1,27 +1,11 @@
-# birdview
+## 설치
 
-> filter-couple-list
+    터미널에 npm install 또는 yarn install 을 이용해서 모든 패키지를 설치 합니다.
 
-## Build Setup
+## 실행
 
-``` bash
-# install dependencies
-npm install
+    npm start 또는 yarn start 를 입력하면 localhost:3000 포트에서 실행됩니다.
 
-# serve with hot reload at localhost:8080
-npm run dev
+## 테스트 실행
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+    npm test 또는 yarn test 를 입력하면 테스트가 수행됩니다.
