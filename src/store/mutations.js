@@ -76,16 +76,11 @@ const hobbysAllMatchList = (state) => {
 
   while (--index > 0) {
     if (hobbysList[index].hobbys === hobbysList[index - 1].hobbys) {
-      temp.unshift([
-        {
-          id: hobbysList[index - 1].id,
-          hobbys: hobbysList[index - 1].hobbys
-        },
-        {
-          id: hobbysList[index].id,
-          hobbys: hobbysList[index].hobbys
-        }
-      ])
+      const idHobbysListObjParam = [hobbysList, index - 1, index]
+
+      temp.unshift(
+        idHobbysListObj(...idHobbysListObjParam)
+      )
       hobbysList.splice(index - 1, 2)
       --index
     }
@@ -137,29 +132,42 @@ const hobbysMatchIdSortList = (state) => {
 }
 
 const hobbysMatchList = (state, hobbysMutableLength) => {
-  let index = state.hobbysList.slice().length
+  const hobbysList = state.hobbysList
+  let index = hobbysList.slice().length
 
   while (--index > 1) {
     for (let i = index - 1; i >= 0; --i) {
-      const hobbysEachMatchList = state.hobbysList[i].hobbys.match(new RegExp(`[${state.hobbysList[index].hobbys}]`, 'g'))
+      const hobbysEachMatchList = hobbysList[i].hobbys.match(new RegExp(`[${hobbysList[index].hobbys}]`, 'g'))
 
       if (!hobbysEachMatchList) continue
       if (hobbysEachMatchList.length === hobbysMutableLength) {
-        state.hobbysMatchList[1].unshift([
-          {
-            id: state.hobbysList[i].id,
-            hobbys: state.hobbysList[i].hobbys
-          },
-          {
-            id: state.hobbysList[index].id,
-            hobbys: state.hobbysList[index].hobbys
-          }
-        ])
-        state.hobbysList.splice(index, 1)
-        state.hobbysList.splice(i, 1)
+        const idHobbysListObjParam = [hobbysList, i, index]
+
+        state.hobbysMatchList[1].unshift(
+          idHobbysListObj(...idHobbysListObjParam)
+        )
+        hobbysList.splice(index, 1)
+        hobbysList.splice(i, 1)
         --index
         break
       }
     }
   }
+}
+
+const idHobbysListObj = (...param) => {
+  const [hobbysList, firstIndex, lastIndex] = param
+
+  return (
+    [
+      {
+        id: hobbysList[firstIndex].id,
+        hobbys: hobbysList[firstIndex].hobbys
+      },
+      {
+        id: hobbysList[lastIndex].id,
+        hobbys: hobbysList[lastIndex].hobbys
+      }
+    ]
+  )
 }
