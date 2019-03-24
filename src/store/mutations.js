@@ -34,7 +34,7 @@ const getHobbysMatchList = (state) => {
 
   if (state.hobbysMatchList[0].length) state.hobbysMatchList = state.hobbysMatchList[0]
   else state.hobbysMatchList = state.hobbysMatchList[1]
-  state.hobbysResultList = state.hobbysMatchList
+  state.hobbysResultList = state.hobbysMatchList.flat(1)
 }
 
 const hobbysMatchListAll = (state) => {

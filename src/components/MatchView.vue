@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in this.$store.state.hobbysResultList.flat(1)" :key="item.matched">
+        <tr v-for="item in this.$store.state.hobbysResultList" :key="item.matched">
           <td>{{ item.matched }}</td>
           <td>{{ item.left }}</td>
           <td>{{ item.right }}</td>
