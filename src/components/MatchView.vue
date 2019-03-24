@@ -26,18 +26,12 @@
 </style>
 
 <script>
-import { mapGetters } from 'vuex'
 import SelectFilter from './SelectFilter'
 
 export default {
   name: 'MatchView',
   components: {
     SelectFilter
-  },
-  methods: {
-    ...mapGetters([
-      'getHobbysMatchList'
-    ])
   }
 }
 </script>
