@@ -1,25 +1,24 @@
 import store from './index'
+import { HOBBYS_FILTER } from './actions'
 
 export default {
   getHobbysList (state) {
     state.hobbysList = stringListSort(state)
-    state.hobbysList = state.hobbysList.map((v, i) => {
-      return Object.assign({
+    state.hobbysList = state.hobbysList.map((hobbys, i) => {
+      return {
         id: i + 1,
-        hobbys: v
-      })
+        hobbys
+      }
     })
     getHobbysMatchList(state)
   },
   handleChangeHobbysListFilter (state, items) {
     if (items.value) {
-      state.hobbysResultList = state.hobbysMatchList.filter(v => {
-        return v.left.includes(items.value) && v.right.includes(items.value)
+      state.hobbysResultList = state.hobbysMatchList.filter(hobbysMatchData => {
+        return hobbysMatchData.left.includes(items.value) && hobbysMatchData.right.includes(items.value)
       })
     }
-    if (items.value === 'filter') {
-      state.hobbysResultList = state.hobbysMatchList
-    }
+    if (items.value === HOBBYS_FILTER) state.hobbysResultList = state.hobbysMatchList
   }
 }
 
@@ -31,14 +30,20 @@ const stringListSort = (state) => {
 }
 
 const getHobbysMatchList = (state) => {
+  hobbysMatchListAll(state)
+
+  if (state.hobbysMatchList[0].length) state.hobbysMatchList = state.hobbysMatchList[0]
+  else state.hobbysMatchList = state.hobbysMatchList[1]
+  state.hobbysResultList = state.hobbysMatchList
+}
+
+const hobbysMatchListAll = (state) => {
   hobbysAllMatchList(state)
-  state.hobbysMatchList = state.hobbysMatchList.map(s => s.map(v => v.sort((a, b) => a.id - b.id)))
   hobbysAllMatchSetList(state)
 
   hobbysRestMatchList(state)
   hobbysRestMatchSetList(state)
-  state.hobbysMatchList = state.hobbysMatchList[0] || state.hobbysMatchList[1]
-  state.hobbysResultList = state.hobbysMatchList
+  console.log(JSON.parse(JSON.stringify(state)))
 }
 
 const hobbysAllMatchSetList = (state) => {
@@ -95,6 +100,12 @@ const hobbysAllMatchList = (state) => {
     })
   })
   hobbysMatchList[0] = temp
+
+  hobbysAllMatchIdSortList(state)
+}
+
+const hobbysAllMatchIdSortList = (state) => {
+  state.hobbysMatchList = state.hobbysMatchList.map(v => v.map(o => o.sort((a, b) => a.id - b.id)))
 }
 
 const hobbysRestMatchSetList = (state) => {
@@ -112,26 +123,31 @@ const hobbysRestMatchSetList = (state) => {
 }
 
 const hobbysRestMatchList = (state) => {
-  let hobbysImmutableLength = state.hobbysList[0].hobbys.length
-  let hobbysMutableLength = Number(hobbysImmutableLength) - 1
+  let hobbysMutableLength = Number(state.hobbysList[0].hobbys.slice().length) - 1
 
   while (hobbysMutableLength > 0) {
-    hobbysMatchList(state)
+    hobbysMatchList(state, hobbysMutableLength)
     if (state.hobbysMatchList[1].length) break
     --hobbysMutableLength
   }
+
+  hobbysMatchIdSortList(state)
 }
 
-const hobbysMatchList = (state) => {
-  let hobbysImmutableLength = state.hobbysList[0].hobbys.length
-  let hobbysMutableLength = Number(hobbysImmutableLength) - 1
+const hobbysMatchIdSortList = (state) => {
+  state.hobbysMatchList = state.hobbysMatchList.map(v => v.sort((a, b) => a[0].id - b[0].id))
+}
+
+const hobbysMatchList = (state, hobbysMutableLength) => {
   let index = state.hobbysList.slice().length
 
   while (--index > 1) {
     for (let i = index - 1; i >= 0; --i) {
-      if (!state.hobbysList[i].hobbys.match(new RegExp(`[${state.hobbysList[index].hobbys}]`, 'g'))) continue
-      if (state.hobbysList[i].hobbys.match(new RegExp(`[${state.hobbysList[index].hobbys}]`, 'g')).length === hobbysMutableLength) {
-        state.hobbysMatchList[Math.abs(hobbysMutableLength - hobbysImmutableLength)].push([
+      const hobbysEachMatchList = state.hobbysList[i].hobbys.match(new RegExp(`[${state.hobbysList[index].hobbys}]`, 'g'))
+
+      if (!hobbysEachMatchList) continue
+      if (hobbysEachMatchList.length === hobbysMutableLength) {
+        state.hobbysMatchList[1].unshift([
           {
             id: state.hobbysList[i].id,
             hobbys: state.hobbysList[i].hobbys
