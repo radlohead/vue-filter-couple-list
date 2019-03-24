@@ -20,7 +20,7 @@ describe('SelectFilter.vue', () => {
         });
     });
 
-    it('should render test', () => {
+    it('should render', () => {
         const wrapper = shallowMount(SelectFilter, { store, localVue });
         expect(wrapper.isVueInstance()).toBeTruthy();
     });

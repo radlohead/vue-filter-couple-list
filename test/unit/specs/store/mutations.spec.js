@@ -1,5 +1,4 @@
 import 'array-flat-polyfill';
-import { shallow } from 'vue-test-utils';
 import mutations from '@/store/mutations';
 import hobbysList100 from '../../hobbysList100.json';
 

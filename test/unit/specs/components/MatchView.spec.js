@@ -14,7 +14,7 @@ describe('MatchView.vue', () => {
 		});
 	});
 
-	it('should render test', () => {
+	it('should render', () => {
 		const wrapper = shallowMount(MatchView, { store, localVue });
 		expect(wrapper.isVueInstance()).toBeTruthy();
     });

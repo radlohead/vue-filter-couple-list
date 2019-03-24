@@ -14,7 +14,7 @@ describe('Home.vue', () => {
 		});
 	});
 
-	it('should render test', () => {
+	it('should render', () => {
 		const wrapper = shallowMount(Home, { store, localVue });
 		expect(wrapper.isVueInstance()).toBeTruthy();
 	});
